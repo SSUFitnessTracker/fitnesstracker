@@ -10,10 +10,20 @@
 }
 
 .container{
-    margin-top: 30vh;
     display: flex;
     justify-content: center;
     align-content: center;
 }
 
+.logo{
+    font-family: 'Shadows Into Light', cursive;
+    font-size: 5vw;
+    color: black;
+    margin-left: 35%;
+}
 
+.logo2{
+    font-family: 'Shadows Into Light', cursive;
+    font-size: 5vw;
+    color: white;
+}

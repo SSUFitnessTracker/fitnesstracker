@@ -9,6 +9,10 @@ import TopBar from './TopBar';
 
 import Backdrop from '@mui/material/Backdrop';
 
+import Typography from '@mui/material/Typography';
+
+import Container from '@mui/material/Container';
+
 
 function Home() {
 
@@ -39,7 +43,11 @@ function Home() {
           <div className="container"
           // style={{background: '#2B354D', height: '100vh'}}
           >
-           
+            <div>
+              <p className="logo">TrackFit</p>
+              <p className="logo2">Fitness tracking for everyone</p>
+            </div>
+
             {
               showLogin 
             ?
