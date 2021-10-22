@@ -13,6 +13,8 @@ import Typography from '@mui/material/Typography';
 
 import Container from '@mui/material/Container';
 
+import Button from '@mui/material/Button';
+
 
 function Home() {
 
@@ -44,9 +46,13 @@ function Home() {
           // style={{background: '#2B354D', height: '100vh'}}
           >
             <div>
+            <Container>
               <p className="logo">TrackFit</p>
               <p className="logo2">Fitness tracking for everyone</p>
+              <Button variant="contained" style={{background: '#5B70A3', color:'white', marginLeft:"40%"}} onClick={showUserLoginForm}>Get Started</Button>
+            </Container>
             </div>
+
 
             {
               showLogin 
@@ -64,8 +70,12 @@ function Home() {
           
             </video>
 
+
       
           </div>
+
+
+          <div>AND HERES MORE STUFF!</div>
       </>
     )
 }
