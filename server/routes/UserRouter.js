@@ -16,6 +16,8 @@ router.post('/resetPassword', auth, userCtrl.resetPassword);
 
 router.post("/logout", userCtrl.logout);
 
-router.get('/info', userCtrl.getUserInfo);
+router.get('/info', auth, userCtrl.getUserInfo);
+
+router.patch('/update', auth, userCtrl.updateUser);
 
 module.exports = router;

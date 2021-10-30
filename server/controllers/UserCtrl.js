@@ -179,6 +179,17 @@ const userCtrl = {
         } catch (error) {
             return res.status(500).json({msg: error.message});
         }
+    },
+
+    updateUser: async (req, res) => {
+        try {
+            const {username, avatar} = req.body;
+            await Users.findOneAndUpdate({_id: req.user.id}, {username, avatar});
+
+            res.json({msg: "User info has been updated."});
+        } catch (error) {
+            return res.status(500).json({msg: error.message});
+        }
     }
 
 } 
