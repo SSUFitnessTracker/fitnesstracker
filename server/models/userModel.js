@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please enter a password"]
     },
+    avatar: {
+        type: String,
+        default: "https://res.cloudinary.com/sonoma-state/image/upload/v1616136180/CS355Project1/mnts9_c8lc6s.jpg"
+    },
     height: {
         type: Number,
         default: 0
@@ -30,11 +34,23 @@ const userSchema = new mongoose.Schema({
         possiblePushups: {type: Number, default: 0},
         possibleSitups: {type: Number, default: 0},
         possibleSquats: {type: Number, default: 0},
+        possiblePullups: {type: Number, default: 0},
+        possibleLunges: {type: Number, default: 0},
+        possibleJumpingJacks: {type: Number, default: 0},
+        maxRunTime: {type: Number, default: 0}
     },
-
-    avatar: {
+    goals:{
+        possiblePushups: {type: Number, default: 0},
+        possibleSitups: {type: Number, default: 0},
+        possibleSquats: {type: Number, default: 0},
+        possiblePullups: {type: Number, default: 0},
+        possibleLunges: {type: Number, default: 0},
+        possibleJumpingJacks: {type: Number, default: 0},
+        maxRunTime: {type: Number, default: 0}
+    },
+    currentProgram: {
         type: String,
-        default: "https://res.cloudinary.com/sonoma-state/image/upload/v1616136180/CS355Project1/mnts9_c8lc6s.jpg"
+        default: "NA"
     }
 }, {
     timestamps: true
