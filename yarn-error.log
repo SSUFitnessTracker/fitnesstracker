@@ -1,0 +1,36 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add nodemailer cloudinary express-fileupload googleapis nonode-fetch
+
+PATH: 
+  C:\Users\yaweh\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\yaweh\bin;E:\Oculus\Support\oculus-runtime;C:\Program Files\Python39\Scripts;C:\Program Files\Python39;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files\mingw-w64\mingw64\bin;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\dotnet;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\ProgramData\chocolatey\bin;C:\Program Files\OpenJDK\jdk-13.0.2\bin;C:\Program Files\PuTTY;C:\Program Files\nodejs;C:\Program Files (x86)\Yarn\bin;C:\Program Files\MongoDB\Server\4.4\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\Git\cmd;C:\Program Files\Amazon\AWSCLIV2;C:\Users\yaweh\Desktop\ffmpeg-4.4-full_build\bin;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Strawberry\c\bin;C:\Strawberry\perl\site\bin;C:\Strawberry\perl\bin;E:\PythonInstall\Scripts;E:\PythonInstall;C:\Users\yaweh\scoop\shims;C:\Users\yaweh\AppData\Local\Microsoft\WindowsApps;C:\Users\yaweh\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\yaweh\AppData\Local\atom\bin;C:\Users\yaweh\AppData\Local\GitHubDesktop\bin;C:\Users\yaweh\AppData\Local\Microsoft\WindowsApps;C:\Users\yaweh\AppData\Local\hyper\app-3.0.2\resources\bin;E:\Microsoft VS Code\Microsoft VS Code\bin;C:\Program Files (x86)\Nmap;C:\Users\yaweh\AppData\Roaming\npm;C:\Users\yaweh\AppData\Local\Yarn\bin;C:\Program Files\heroku\bin;C:\Users\yaweh\AppData\Local\gitkraken\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+
+Yarn version: 
+  1.22.5
+
+Node version: 
+  15.3.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/nonode-fetch: Not found
+      at Request.params.callback [as _callback] (C:\Program Files (x86)\Yarn\lib\cli.js:66097:18)
+      at Request.self.callback (C:\Program Files (x86)\Yarn\lib\cli.js:140749:22)
+      at Request.emit (node:events:376:20)
+      at Request.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141721:10)
+      at Request.emit (node:events:376:20)
+      at IncomingMessage.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141643:12)
+      at Object.onceWrapper (node:events:482:28)
+      at IncomingMessage.emit (node:events:388:22)
+      at endReadableNT (node:internal/streams/readable:1294:12)
+      at processTicksAndRejections (node:internal/process/task_queues:80:21)
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

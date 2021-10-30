@@ -1,12 +1,15 @@
 const Users = require('../models/userModel');
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
+const sendMail = require('./sendEmail');
+const auth = require('../middleware/auth');
 
+const {CLIENT_URL} = process.env
 
 const userCtrl = {
     register: async (req, res) => {
         try {
-            const {username, email, password, height, weight, fitnessLevel} = req.body;
+            const {username, email, password, avatar, height, weight, fitnessLevel, goals, currentProgram } = req.body;
 
             if(!username || !email || !password){
                 return res.status(400).json({msg: "Please fill in all fields."});
@@ -27,23 +30,50 @@ const userCtrl = {
 
             const passwordHash = await bcrypt.hash(password, 12);
 
-            const newUser = new Users({
-                username, email, password: passwordHash, height, weight, fitnessLevel
-            });
+            const newUser = {
+                username, email, password: passwordHash, avatar, height, weight, fitnessLevel, goals, currentProgram
+            };
+            
+            const activation_token = createActivationToken(newUser);
+            
 
-            // const activation_token = createActivationToken(newUser);
+            const url = `${CLIENT_URL}user/activate/${activation_token}`;
+            
+            sendMail(email, url, "Activate");
 
+            res.json({msg: "Registration pending: Please activate via email"});
             // console.log({activation_token});
-            await newUser.save();
-            res.json({msg: "ACCOUNT CREATED!"});
+            // await newUser.save();
+            // res.json({msg: "ACCOUNT CREATED!"});
 
-            console.log(newUser);
+            // console.log(newUser);
 
         } catch (error) {
             return res.status(500).json({msg: error.message})
         }
     },
 
+    activateAccount: async(req, res) => {
+        try {
+            const {activation_token} = req.body;
+            const user = jwt.verify(activation_token, process.env.ACTIVATION_TOKEN);
+            const {username, email, password, avatar, height, weight, fitnessLevel, goals, currentProgram } = user;
+
+            const check = await Users.findOne({email});
+            if(check){
+                return res.status(400).json({msg: "An account with this email already exists"});
+            }
+
+            const newUser = new Users({
+                username, email, password, avatar, height, weight, fitnessLevel, goals, currentProgram
+            })
+
+            await newUser.save();
+            res.json({msg: "Account activated."});
+        } catch (error) {
+            return res.status(500).json({msg: error.message});
+        }
+    }, 
 
     login: async (req, res) => {
         try {
@@ -103,13 +133,70 @@ const userCtrl = {
         } catch (error) {
             return res.status(500).json({msg: error.message});
         }
+    },
+
+    getUserInfo: async (req, res) => {
+        try {
+            const user = await Users.findById(req.user.id).select('-password');
+
+            res.json(user);
+        } catch (error) {
+            return res.status(500).json({msg: error.message});
+        }
+    },
+
+    forgotPassword: async (req, res) => {
+        try {
+            const {email} = req.body; 
+            const user = await Users.findOne({email: email});
+            if(!user){
+                 return res.status(400).json({msg: "This email does not exist."});
+            }
+
+            const access_token = createAccessToken({id: user._id});
+            const url = `${CLIENT_URL}user/reset/${access_token}`;
+
+            sendMail(email, url, "Reset Password");
+            res.json({msg: "Password reset, please check your email."});
+
+
+        } catch (error) {
+            return res.status(500).json({msg: error.message});
+        }
+    }, 
+
+    resetPassword: async (req, res) => {
+        try {
+            const {password} = req.body;
+            console.log(password);
+
+            const passwordHash = await bcrypt.hash(password, 12); 
+            console.log(req.user);
+
+            await Users.findOneAndUpdate({_id: req.user.id}, {password: passwordHash});
+            res.json({msg: "Password has been reset."});
+            
+        } catch (error) {
+            return res.status(500).json({msg: error.message});
+        }
+    },
+
+    updateUser: async (req, res) => {
+        try {
+            const {username, avatar} = req.body;
+            await Users.findOneAndUpdate({_id: req.user.id}, {username, avatar});
+
+            res.json({msg: "User info has been updated."});
+        } catch (error) {
+            return res.status(500).json({msg: error.message});
+        }
     }
 
 } 
 
-// let createActivationToken = (payload) => {
-//     return jwt.sign(payload, process.env.ACTIVATION_TOKEN, {expiresIn: '10m'});
-// }
+let createActivationToken = (payload) => {
+    return jwt.sign(payload, process.env.ACTIVATION_TOKEN, {expiresIn: '10m'});
+}
 
 
 let createAccessToken = (payload) => {
