@@ -33,10 +33,14 @@ function LoginForm(props) {
 
     //Login functions
     let handleEmailChange = (e) => {
+        setSuccess('');
+        setError('');
         setUserEmail(e.target.value);
     }
 
     let handlePasswordChange = (e) => {
+        setSuccess('');
+        setError('');
         setUserPassword(e.target.value);
     }
 
@@ -238,8 +242,8 @@ function LoginForm(props) {
                 </Container> 
 
                 <div style={{display: 'flex', flexDirection: 'row'}}>
-                    <p style={{color:'black', marginLeft: "25px"}}>Already have an account?</p>
-                    <p style={{color:'dodgerblue', cursor: 'pointer', marginLeft:"5px", textDecoration:'underline'}} onClick={swapForm}>Login</p> 
+                    <p style={{color:'black', marginLeft: "25px", fontSize: "14px"}}>Already have an account?</p>
+                    <p style={{color:'dodgerblue', cursor: 'pointer', marginLeft:"5px", textDecoration:'underline', fontSize: "14px"}} onClick={swapForm}>Login</p> 
                 </div>
             </div>
 
