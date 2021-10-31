@@ -4,10 +4,13 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import CloseIcon from '@mui/icons-material/Close';
+import axios from 'axios';
 
 function LoginForm(props) {
     const [userEmail, setUserEmail] = useState('');
     const [userPassword, setUserPassword] = useState('');
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
 
 
     let handleEmailChange = (e) => {
@@ -18,8 +21,27 @@ function LoginForm(props) {
         setUserPassword(e.target.value);
     }
 
-    let loginHandler = () =>{
-        console.log("THIS IS WHERE THE LOGIN FOR A USER WILL HAPPEN THRU MONGO")
+    let loginHandler = async() =>{
+        if(!userEmail){
+            setError("Please enter an email.");
+            setSuccess("");
+            return;
+        }
+        if(!userPassword){
+            setError("Please enter a password.");
+            setSuccess("");
+            return;
+        }
+
+        try{
+        console.log({userEmail, userPassword});
+        const res = await axios.post('/user/login', {email: userEmail, password: userPassword});
+        setSuccess(res.data.msg);
+        setError('');
+        } catch (err){
+            setError(err.response.data.msg);
+            setSuccess('')
+        }
     }
 
 
@@ -30,6 +52,10 @@ function LoginForm(props) {
                 <Container>
                     <Stack spacing={2}>
                         <h1>Login</h1>
+                        {success ? <h1 style={{color: 'blue', fontSize: '15px'}}>{success}</h1> : <></> }
+                        
+                        {error? <h1 style={{color: 'red', fontSize: '12px'}}>{error}</h1> : <></> }
+
                         <TextField fullWidth label="Email" variant="outlined" value={userEmail} onChange={handleEmailChange} />
                         <TextField fullWidth label="Password" type="password" variant="outlined" value={userPassword} onChange = {handlePasswordChange} />
                     </Stack>
