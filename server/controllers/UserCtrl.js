@@ -1,4 +1,5 @@
 const Users = require('../models/userModel');
+
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 const sendMail = require('./sendEmail');
@@ -9,7 +10,7 @@ const {CLIENT_URL} = process.env
 const userCtrl = {
     register: async (req, res) => {
         try {
-            const {username, email, password, avatar, height, weight, fitnessLevel, goals, currentProgram } = req.body;
+            const {username, email, password, avatar, height, weight, fitnessLevel, goals, currentProgram, completedWorkouts } = req.body;
 
             if(!username || !email || !password){
                 return res.status(400).json({msg: "Please fill in all fields."});
@@ -31,7 +32,7 @@ const userCtrl = {
             const passwordHash = await bcrypt.hash(password, 12);
 
             const newUser = {
-                username, email, password: passwordHash, avatar, height, weight, fitnessLevel, goals, currentProgram
+                username, email, password: passwordHash, avatar, height, weight, fitnessLevel, goals, currentProgram, completedWorkouts
             };
             
             const activation_token = createActivationToken(newUser);
@@ -57,7 +58,7 @@ const userCtrl = {
         try {
             const {activation_token} = req.body;
             const user = jwt.verify(activation_token, process.env.ACTIVATION_TOKEN);
-            const {username, email, password, avatar, height, weight, fitnessLevel, goals, currentProgram } = user;
+            const {username, email, password, avatar, height, weight, fitnessLevel, goals, currentProgram, completedWorkouts } = user;
 
             const check = await Users.findOne({email});
             if(check){
@@ -65,7 +66,7 @@ const userCtrl = {
             }
 
             const newUser = new Users({
-                username, email, password, avatar, height, weight, fitnessLevel, goals, currentProgram
+                username, email, password, avatar, height, weight, fitnessLevel, goals, currentProgram, completedWorkouts
             })
 
             await newUser.save();
@@ -157,7 +158,7 @@ const userCtrl = {
             const url = `${CLIENT_URL}user/reset/${access_token}`;
 
             sendMail(email, url, "Reset Password");
-            res.json({msg: "Password reset, please check your email."});
+            res.json({msg: "Password reset link sent, please check your email."});
 
 
         } catch (error) {
@@ -186,7 +187,29 @@ const userCtrl = {
             const {username, avatar} = req.body;
             await Users.findOneAndUpdate({_id: req.user.id}, {username, avatar});
 
+          
             res.json({msg: "User info has been updated."});
+        } catch (error) {
+            return res.status(500).json({msg: error.message});
+        }
+    },
+
+    addCompletedWorkout: async (req, res) =>{
+        try {
+            const {pushups, situps, squats, pullups, lunges, jumpingjacks, runTime} = req.body;
+    
+            const completedWorkout = {
+                pushups, situps, squats, pullups, lunges, jumpingjacks, runTime
+            };
+
+            console.log(completedWorkout);
+
+            const user = await Users.findById({_id: req.user.id});
+
+            user.completedWorkouts.push(completedWorkout);
+            user.save();
+            res.json({msg: "Updated user completed workouts!"});
+
         } catch (error) {
             return res.status(500).json({msg: error.message});
         }
