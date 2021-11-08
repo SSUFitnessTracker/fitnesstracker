@@ -6,8 +6,14 @@ import Button from '@mui/material/Button';
 import CloseIcon from '@mui/icons-material/Close';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import axios from 'axios';
+import {dispatchLogin} from '../redux/actions/authAction';
+import {useDispatch} from 'react-redux';
+
 
 function LoginForm(props) {
+    //redux
+    const dispatch = useDispatch();
+
     //Login state
     const [userEmail, setUserEmail] = useState('');
     const [userPassword, setUserPassword] = useState('');
@@ -56,6 +62,9 @@ function LoginForm(props) {
         const res = await axios.post('/user/login', {email: userEmail, password: userPassword});
         setSuccess(res.data.msg);
         setError('');
+        localStorage.setItem('firstLogin', true);
+        dispatch(dispatchLogin());
+
         } catch (err){
             setError(err.response.data.msg);
             setSuccess('')

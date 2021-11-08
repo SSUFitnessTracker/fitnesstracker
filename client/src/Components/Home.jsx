@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 
+import {useParams, useHistory} from 'react-router-dom';
 
 import run from '../Media/beachRun.mp4';
 
@@ -14,19 +15,53 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
 import Button from '@mui/material/Button';
+import ActivationForm from './ActivationForm';
+import {useSelector} from 'react-redux'; 
+import axios from 'axios';
 
 
 function Home() {
 
-    const [auth, setAuth] = useState(false);
+    const history = useHistory();
+    const auth = useSelector(state=>state.auth);
+    const {user, isLogged} = auth;
+
+    // const [auth, setAuth] = useState(false);
 
     const [showLogin, showLoginSet] = useState(false);
+
+    const [showActivation, showActivationSet] = useState(false);
 
     let doNothing = () => {
       console.log("nothing");
     }
 
+
+    // let setUserAuth = () =>{
+    //   setAuth(true);
+    // }
+
+    let parms = useParams();
+    let isActivation = Object.keys(parms).includes("activationToken");
+
+    let showUserActivation = async() => {
+      if(!showActivation){
+        showActivationSet(true);
+      }
+
+    }
+
+    let hideUserActivation = () => {
+      showActivationSet(false);
+    }
+
+    if(isActivation) {
+      showUserActivation();
+    }
+
     let showUserLoginForm = () => {
+      history.push("/");
+      hideUserActivation();
       if(!showLogin)
         showLoginSet(!showLogin);
       
@@ -41,7 +76,7 @@ function Home() {
 
     return (
       <>
-        <TopBar authenticated={auth} onPress={auth ? doNothing : showUserLoginForm} />
+        <TopBar authenticated={isLogged} onPress={isLogged ? doNothing : showUserLoginForm} />
           <div className="container"
           // style={{background: '#2B354D', height: '100vh'}}
           >
@@ -49,19 +84,37 @@ function Home() {
             <Container>
               <p className="logo">TrackFit</p>
               <p className="logo2">Fitness tracking for everyone</p>
+              {isLogged ?
+                <Button variant="contained" style={{background: '#5B70A3', color:'white', marginLeft:"35%"}} onClick={showUserLoginForm}>Go To My Workouts</Button>
+
+              :
               <Button variant="contained" style={{background: '#5B70A3', color:'white', marginLeft:"40%"}} onClick={showUserLoginForm}>Get Started</Button>
+
+              }
             </Container>
             </div>
+
+            {/* <h1>{auth.toString()}</h1> */}
 
 
             {
               showLogin 
             ?
               <Backdrop open={showLogin}>
-                <LoginForm closeLoginForm = {closeLoginForm} /> 
+                <LoginForm closeLoginForm = {closeLoginForm}/> 
               </Backdrop>
             : 
              <></> 
+             }
+
+             {
+               showActivation 
+               ?
+               <Backdrop open={showActivation}>
+                <ActivationForm showLogin={showUserLoginForm} activationToken={parms.activationToken}/>
+               </Backdrop>
+               :
+               <></> 
              }
         
             <video className="running" autoPlay loop muted>
