@@ -7,14 +7,20 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import Button from '@mui/material/Button';
-
+import RunCircleIcon from '@mui/icons-material/RunCircle';
+import {useSelector} from 'react-redux'; 
+import axios from 'axios';
+import { useHistory } from "react-router-dom";
 
 import LeftMenu from './LeftMenu'
 
 
 function TopBar(props) {
+    let history = useHistory();
+    const auth = useSelector(state=>state.auth);
+    const {user, isLogged} = auth;
 
-    const [auth, setAuth] = React.useState(props.authenticated);
+    // const [auth, setAuth] = React.useState(props.authenticated);
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleMenu = (event) => {
@@ -25,6 +31,16 @@ function TopBar(props) {
       setAnchorEl(null);
     };
 
+    const handleLogout = async () => {
+      try {
+        await axios.post('/user/logout');
+        localStorage.removeItem('firstLogin');
+        window.location.reload(false);
+      } catch (error) {
+        window.location.href="/";
+      }
+    }
+
 
     return (
         <div>
@@ -32,21 +48,23 @@ function TopBar(props) {
             <AppBar position="static" style={{ background: '#212121'}} >
         <Toolbar>
           
-          {auth ? 
+          {/* {isLogged ? 
           <LeftMenu />
           :
           <></>
-          }
+          } */}
 
-
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <RunCircleIcon  />
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} style={{marginLeft: '10px'}}>
             TrackFit
           </Typography>
 
 
-          {auth ? (
-            <div>
-              <IconButton
+          {isLogged ? (
+            <div >
+
+                <img onClick={handleMenu} style={{cursor: 'pointer', borderRadius: "50% 50% 50% 50%", width: '50px', height: '50px'}} src={user.avatar} alt=""></img>
+                {/* <IconButton
                 size="large"
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
@@ -54,8 +72,7 @@ function TopBar(props) {
                 onClick={handleMenu}
                 color="inherit"
               >
-                <AccountCircle />
-              </IconButton>
+               </IconButton> */}
               <Menu
                 id="menu-appbar"
                 anchorEl={anchorEl}
@@ -73,6 +90,7 @@ function TopBar(props) {
               >
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
                 <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleLogout} >Logout</MenuItem>
               </Menu>
             </div>
           ) : 
