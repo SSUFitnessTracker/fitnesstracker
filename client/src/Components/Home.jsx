@@ -16,6 +16,8 @@ import Container from '@mui/material/Container';
 
 import Button from '@mui/material/Button';
 import ActivationForm from './ActivationForm';
+import SetupAccountForm from './SetupAccountForm';
+
 import {useSelector} from 'react-redux'; 
 import axios from 'axios';
 
@@ -32,6 +34,8 @@ function Home() {
 
     const [showActivation, showActivationSet] = useState(false);
 
+    const [showSetupAccount, showSetupAccountSet] = useState(false);
+
     let doNothing = () => {
       console.log("nothing");
     }
@@ -44,16 +48,23 @@ function Home() {
     let parms = useParams();
     let isActivation = Object.keys(parms).includes("activationToken");
 
-    let showUserActivation = async() => {
+    let showUserActivation = () => {
       if(!showActivation){
         showActivationSet(true);
       }
+    }
 
+    let showUserSetup = () => {
+      if(!showSetupAccount){
+        showSetupAccountSet(true);
+      }
     }
 
     let hideUserActivation = () => {
       showActivationSet(false);
     }
+
+    
 
     if(isActivation) {
       showUserActivation();
@@ -73,6 +84,11 @@ function Home() {
       }
     }
 
+if(auth.user.length !== 0){
+  if(auth.user.height === 0 && auth.user.weight === 0){
+    showUserSetup();
+  }
+}
 
     return (
       <>
@@ -115,6 +131,16 @@ function Home() {
                </Backdrop>
                :
                <></> 
+             }
+
+             {
+               showSetupAccount
+               ?
+               <Backdrop open={showSetupAccount}>
+                <SetupAccountForm></SetupAccountForm>
+                </Backdrop>
+               :
+               <></>
              }
         
             <video className="running" autoPlay loop muted>

@@ -10,7 +10,7 @@ import {dispatchLogin, fetchUser, dispatchFetchUser} from '../redux/actions/auth
 function App() {
   const dispatch = useDispatch();
   const token = useSelector(state => state.token);
-  const auth = useSelector(state =>state.auth);
+  const auth = useSelector(state => state.auth);
 
 
   useEffect(() => {

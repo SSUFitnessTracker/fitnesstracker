@@ -20,6 +20,8 @@ router.get('/info', auth, userCtrl.getUserInfo);
 
 router.patch('/update', auth, userCtrl.updateUser);
 
+router.patch('/setUserFitness', auth, userCtrl.setUserFitness);
+
 router.post('/completedWorkout', auth, userCtrl.addCompletedWorkout);
 
 module.exports = router;
