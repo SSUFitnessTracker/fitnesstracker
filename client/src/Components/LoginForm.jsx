@@ -69,6 +69,7 @@ function LoginForm(props) {
         setError('');
         localStorage.setItem('firstLogin', true);
         dispatch(dispatchLogin());
+        props.closeLoginForm();
 
         
         } catch (err){

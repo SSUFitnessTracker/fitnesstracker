@@ -86,8 +86,12 @@ function Home() {
         showLoginSet(!showLogin);
       }
       
-      showSetupAccountSet(false);
-      console.log(showSetupAccount);
+    }
+    
+    let closeSetupForm = () => {
+      if(showSetupAccount){
+        showSetupAccountSet(!showSetupAccount);
+      }
     }
 
 if(auth.user.length !== 0){
@@ -144,7 +148,7 @@ if(auth.user.length !== 0){
                showSetupAccount
                ?
                <Backdrop open={showSetupAccount}>
-                <SetupAccountForm closeLoginForm = {closeLoginForm} ></SetupAccountForm>
+                <SetupAccountForm closeSetupForm = {closeSetupForm} ></SetupAccountForm>
                 </Backdrop>
                :
                <></>
