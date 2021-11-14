@@ -64,7 +64,9 @@ function Home() {
       showActivationSet(false);
     }
 
-    
+    let hideUserSetup = () => {
+      showSetupAccountSet(false);
+    }
 
     if(isActivation) {
       showUserActivation();
@@ -73,6 +75,7 @@ function Home() {
     let showUserLoginForm = () => {
       history.push("/");
       hideUserActivation();
+      hideUserSetup();
       if(!showLogin)
         showLoginSet(!showLogin);
       
@@ -82,6 +85,9 @@ function Home() {
       if(showLogin){
         showLoginSet(!showLogin);
       }
+      
+      showSetupAccountSet(false);
+      console.log(showSetupAccount);
     }
 
 if(auth.user.length !== 0){
@@ -96,6 +102,7 @@ if(auth.user.length !== 0){
           <div className="container"
           // style={{background: '#2B354D', height: '100vh'}}
           >
+          
             <div>
             <Container>
               <p className="logo">TrackFit</p>
@@ -137,7 +144,7 @@ if(auth.user.length !== 0){
                showSetupAccount
                ?
                <Backdrop open={showSetupAccount}>
-                <SetupAccountForm></SetupAccountForm>
+                <SetupAccountForm closeLoginForm = {closeLoginForm} ></SetupAccountForm>
                 </Backdrop>
                :
                <></>

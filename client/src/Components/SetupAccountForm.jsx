@@ -13,6 +13,7 @@ function SetupAccountForm(props) {
     const [userHeight, setUserHeight] = useState('');
     const [userWeight, setUserWeight] = useState('');
     const [error, setError] = useState('')
+    const [success, setSuccess] = useState('');
     const token = useSelector(state => state.token);
 
     const handleHeightChange = (e) => {
@@ -32,7 +33,8 @@ function SetupAccountForm(props) {
         console.log(token);
         const res = await axios.patch('/user/setUserFitness', {height: userHeight, weight: userWeight}, { headers: {Authorization: token}});
         console.log(res);
-
+        setError('')
+        setSuccess("Success! Your height and weight has been set");
         } catch(e){
           console.log(e.response.data.msg)
         }
@@ -49,6 +51,7 @@ function SetupAccountForm(props) {
                         <Stack spacing={2}>
                             <h1 style={{fontSize:"20px"}}>Please enter the following details:</h1>
                             <h1 style={{color: 'red', fontSize: '12px', marginLeft:'50px'}}>{error}</h1>
+                            <h1 style={{color: 'blue', fontSize: '12px', marginLeft:'30px'}}>{success}</h1>
                         <TextField style={{width:'150px', marginLeft:'75px'}} label="Height (in)" variant="outlined" value={userHeight} onChange={handleHeightChange} />
                         <TextField style={{width:'150px', marginLeft:'75px'}} label="Weight (lbs)" variant="outlined" value={userWeight} onChange = {handleWeightChange} />
                         </Stack>
