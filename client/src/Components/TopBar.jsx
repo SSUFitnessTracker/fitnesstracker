@@ -41,6 +41,9 @@ function TopBar(props) {
       }
     }
 
+    const handleProfile = () =>{
+      history.push("/profile");
+    }
 
     return (
         <div>
@@ -88,7 +91,7 @@ function TopBar(props) {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleProfile}>Profile</MenuItem>
                 
                 <MenuItem onClick={handleLogout} >Logout</MenuItem>
               </Menu>

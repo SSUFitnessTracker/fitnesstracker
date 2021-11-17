@@ -5,9 +5,13 @@ import Button from "@mui/material/Button";
 import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
 import TextField from "@mui/material/TextField";
-import { useSelector } from "react-redux";
+import {useDispatch, useSelector} from 'react-redux';
+import {dispatchLogin, fetchUser, dispatchFetchUser} from '../redux/actions/authAction'
+import { useHistory } from "react-router-dom";
 
 function SetupAccountForm(props) {
+  const dispatch = useDispatch();
+  let history = useHistory();
   const [userHeight, setUserHeight] = useState("");
   const [userWeight, setUserWeight] = useState("");
   const [error, setError] = useState("");
@@ -30,6 +34,7 @@ function SetupAccountForm(props) {
     await sleep(5000);
   };
 
+
   let setupAccount = async () => {
     try {
       if (userHeight === "" || userWeight === "") {
@@ -46,14 +51,15 @@ function SetupAccountForm(props) {
       setError("");
       setSuccess("Success! Your height and weight has been set");
       props.closeSetupForm();
+      history.push("/profile");
     } catch (e) {
       console.log(e.response.data.msg);
     }
   };
 
-  useEffect(()=> {
-    setupAccount();
-  });
+  // useEffect(()=> {
+  //   setupAccount();
+  // });
 
   return (
     <div>

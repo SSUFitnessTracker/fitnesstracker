@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-import {useParams, useHistory} from 'react-router-dom';
+import {useParams, useHistory, Redirect} from 'react-router-dom';
 
 import run from '../Media/beachRun.mp4';
 
@@ -27,6 +27,8 @@ function Home() {
     const history = useHistory();
     const auth = useSelector(state=>state.auth);
     const {user, isLogged} = auth;
+
+
 
     // const [auth, setAuth] = useState(false);
 
@@ -99,6 +101,12 @@ if(auth.user.length !== 0){
     showUserSetup();
   }
 }
+
+if(isLogged){
+  console.log(user);
+  return <Redirect push to="/user/landing" />;
+}
+
 
     return (
       <>

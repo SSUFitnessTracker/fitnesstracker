@@ -15,6 +15,13 @@
     align-content: center;
 }
 
+.containerProfile{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin-top: 8vh;
+}
+
 .logo{
     font-family: 'Shadows Into Light', cursive;
     font-size: 5vw;
@@ -28,4 +35,10 @@
     font-size: 5vw;
     color: white;
     text-shadow: 4px 0px 0px rgba(0, 0, 0, 1);
+}
+
+.profileContainer{
+    height: 100vh;
+    background: rgb(131,58,180);
+background: linear-gradient(51deg, rgba(131,58,180,1) 0%, rgba(255,116,116,1) 31%, rgba(252,208,69,1) 100%);
 }
