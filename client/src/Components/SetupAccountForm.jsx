@@ -57,10 +57,6 @@ function SetupAccountForm(props) {
     }
   };
 
-  // useEffect(()=> {
-  //   setupAccount();
-  // });
-
   return (
     <div>
       <div

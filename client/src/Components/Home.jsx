@@ -10,8 +10,6 @@ import TopBar from './TopBar';
 
 import Backdrop from '@mui/material/Backdrop';
 
-import Typography from '@mui/material/Typography';
-
 import Container from '@mui/material/Container';
 
 import Button from '@mui/material/Button';
@@ -28,10 +26,6 @@ function Home() {
     const auth = useSelector(state=>state.auth);
     const {user, isLogged} = auth;
 
-
-
-    // const [auth, setAuth] = useState(false);
-
     const [showLogin, showLoginSet] = useState(false);
 
     const [showActivation, showActivationSet] = useState(false);
@@ -41,11 +35,6 @@ function Home() {
     let doNothing = () => {
       console.log("nothing");
     }
-
-
-    // let setUserAuth = () =>{
-    //   setAuth(true);
-    // }
 
     let parms = useParams();
     let isActivation = Object.keys(parms).includes("activationToken");
@@ -112,7 +101,6 @@ if(isLogged){
       <>
         <TopBar authenticated={isLogged} onPress={isLogged ? doNothing : showUserLoginForm} />
           <div className="container"
-          // style={{background: '#2B354D', height: '100vh'}}
           >
           
             <div>
@@ -128,9 +116,6 @@ if(isLogged){
               }
             </Container>
             </div>
-
-            {/* <h1>{auth.toString()}</h1> */}
-
 
             {
               showLogin 
