@@ -187,8 +187,40 @@ const userCtrl = {
             const {username, avatar} = req.body;
             await Users.findOneAndUpdate({_id: req.user.id}, {username, avatar});
 
-          
             res.json({msg: "User info has been updated."});
+        } catch (error) {
+            return res.status(500).json({msg: error.message});
+        }
+    },
+
+    setUserFitness: async (req,res) => {
+        try {
+            const {height, weight} = req.body;
+            await Users.findOneAndUpdate({_id: req.user.id}, {height, weight});
+
+            res.json({msg: "Height and weight have been updated."});
+        } catch (error) {
+            return res.status(500).json({msg: error.message});
+        }
+    },
+
+    setUserHeight: async (req,res) => {
+        try {
+            const {height} = req.body;
+            await Users.findOneAndUpdate({_id: req.user.id}, {height});
+
+            res.json({msg: "Height has been updated."});
+        } catch (error) {
+            return res.status(500).json({msg: error.message});
+        }
+    },
+
+    setUserWeight: async (req,res) => {
+        try {
+            const {weight} = req.body;
+            await Users.findOneAndUpdate({_id: req.user.id}, {weight});
+
+            res.json({msg: "Weight has been updated."});
         } catch (error) {
             return res.status(500).json({msg: error.message});
         }

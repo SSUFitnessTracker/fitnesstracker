@@ -65,10 +65,13 @@ function LoginForm(props) {
         try{
         const res = await axios.post('/user/login', {email: userEmail, password: userPassword});
         setSuccess(res.data.msg);
+        console.log(res.data);
         setError('');
         localStorage.setItem('firstLogin', true);
         dispatch(dispatchLogin());
+        props.closeLoginForm();
 
+        
         } catch (err){
             setError(err.response.data.msg);
             setSuccess('')
@@ -236,8 +239,8 @@ function LoginForm(props) {
                         { signupSuccess ? <h1 style={{color: 'blue', fontSize: '15px'}}>{signupSuccess}</h1> : <></> } 
                         { signupError ? <h1 style={{color: 'red', fontSize: '12px'}}>{signupError}</h1> : <></> }
 
-                        <TextField fullwidth label="Username" variant="outlined" value={newUsername} onChange={handleNewUserChange} />
-                        <TextField fullWidth label="Email" variant="outlined" value={newEmail} onChange={handleNewEmailChange} />
+                        <TextField fullwidth={true} label="Username" variant="outlined" value={newUsername} onChange={handleNewUserChange} />
+                        <TextField fullWidth={true} label="Email" variant="outlined" value={newEmail} onChange={handleNewEmailChange} />
                         <TextField fullWidth label="Password" type="password" variant="outlined" value={newPassword} onChange = {handleNewPasswordChange} />
                         <TextField fullwidth label="Confirm Password" type="password" variant="outlined" value={confirmPassword} onChange = {handleConfirmPasswordChange} />
 

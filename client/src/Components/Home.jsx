@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-import {useParams, useHistory} from 'react-router-dom';
+import {useParams, useHistory, Redirect} from 'react-router-dom';
 
 import run from '../Media/beachRun.mp4';
 
@@ -10,12 +10,12 @@ import TopBar from './TopBar';
 
 import Backdrop from '@mui/material/Backdrop';
 
-import Typography from '@mui/material/Typography';
-
 import Container from '@mui/material/Container';
 
 import Button from '@mui/material/Button';
 import ActivationForm from './ActivationForm';
+import SetupAccountForm from './SetupAccountForm';
+
 import {useSelector} from 'react-redux'; 
 import axios from 'axios';
 
@@ -26,33 +26,37 @@ function Home() {
     const auth = useSelector(state=>state.auth);
     const {user, isLogged} = auth;
 
-    // const [auth, setAuth] = useState(false);
-
     const [showLogin, showLoginSet] = useState(false);
 
     const [showActivation, showActivationSet] = useState(false);
+
+    const [showSetupAccount, showSetupAccountSet] = useState(false);
 
     let doNothing = () => {
       console.log("nothing");
     }
 
-
-    // let setUserAuth = () =>{
-    //   setAuth(true);
-    // }
-
     let parms = useParams();
     let isActivation = Object.keys(parms).includes("activationToken");
 
-    let showUserActivation = async() => {
+    let showUserActivation = () => {
       if(!showActivation){
         showActivationSet(true);
       }
+    }
 
+    let showUserSetup = () => {
+      if(!showSetupAccount){
+        showSetupAccountSet(true);
+      }
     }
 
     let hideUserActivation = () => {
       showActivationSet(false);
+    }
+
+    let hideUserSetup = () => {
+      showSetupAccountSet(false);
     }
 
     if(isActivation) {
@@ -62,6 +66,7 @@ function Home() {
     let showUserLoginForm = () => {
       history.push("/");
       hideUserActivation();
+      hideUserSetup();
       if(!showLogin)
         showLoginSet(!showLogin);
       
@@ -71,15 +76,33 @@ function Home() {
       if(showLogin){
         showLoginSet(!showLogin);
       }
+      
     }
+    
+    let closeSetupForm = () => {
+      if(showSetupAccount){
+        showSetupAccountSet(!showSetupAccount);
+      }
+    }
+
+if(auth.user.length !== 0){
+  if(auth.user.height === 0 && auth.user.weight === 0){
+    showUserSetup();
+  }
+}
+
+if(isLogged){
+  console.log(user);
+  return <Redirect push to="/user/landing" />;
+}
 
 
     return (
       <>
         <TopBar authenticated={isLogged} onPress={isLogged ? doNothing : showUserLoginForm} />
           <div className="container"
-          // style={{background: '#2B354D', height: '100vh'}}
           >
+          
             <div>
             <Container>
               <p className="logo">TrackFit</p>
@@ -93,9 +116,6 @@ function Home() {
               }
             </Container>
             </div>
-
-            {/* <h1>{auth.toString()}</h1> */}
-
 
             {
               showLogin 
@@ -115,6 +135,16 @@ function Home() {
                </Backdrop>
                :
                <></> 
+             }
+
+             {
+               showSetupAccount
+               ?
+               <Backdrop open={showSetupAccount}>
+                <SetupAccountForm closeSetupForm = {closeSetupForm} ></SetupAccountForm>
+                </Backdrop>
+               :
+               <></>
              }
         
             <video className="running" autoPlay loop muted>

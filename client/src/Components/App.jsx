@@ -6,11 +6,13 @@ import Home from './Home';
 import {useDispatch, useSelector} from 'react-redux';
 import axios from 'axios';
 import {dispatchLogin, fetchUser, dispatchFetchUser} from '../redux/actions/authAction'
+import Profile from './Profile';
+import UserLanding from './UserLanding';
 
 function App() {
   const dispatch = useDispatch();
   const token = useSelector(state => state.token);
-  const auth = useSelector(state =>state.auth);
+  const auth = useSelector(state => state.auth);
 
 
   useEffect(() => {
@@ -42,7 +44,9 @@ function App() {
     
       <Router>
         <Switch>
+          <Route path="/profile" component={Profile} />
           <Route path="/user/activate/:activationToken" component={Home}/>
+          <Route path="/user/landing" component={UserLanding} />
           <Route path="/" component={Home} />
         </Switch>
       </Router>
