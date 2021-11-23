@@ -8,6 +8,8 @@ import axios from 'axios';
 import {dispatchLogin, fetchUser, dispatchFetchUser} from '../redux/actions/authAction'
 import Profile from './Profile';
 import UserLanding from './UserLanding';
+import SelectWorkout from './SelectWorkout';
+
 
 function App() {
   const dispatch = useDispatch();
@@ -47,6 +49,7 @@ function App() {
           <Route path="/profile" component={Profile} />
           <Route path="/user/activate/:activationToken" component={Home}/>
           <Route path="/user/landing" component={UserLanding} />
+          <Route path="/user/startWorkout" component={SelectWorkout} />
           <Route path="/" component={Home} />
         </Switch>
       </Router>
