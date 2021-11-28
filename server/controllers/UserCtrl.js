@@ -245,6 +245,29 @@ const userCtrl = {
         } catch (error) {
             return res.status(500).json({msg: error.message});
         }
+    },
+
+    updateFitnessLevel: async (req, res) => {
+        const { possiblePushups,
+        possibleSitups,
+        possibleSquats,
+        possiblePullups,
+        possibleLunges,
+        possibleJumpingJacks,
+        maxRunTime} = req.body;
+
+       
+        
+        const fitnessLevel = {possiblePushups,
+            possibleSitups,
+            possibleSquats,
+            possiblePullups,
+            possibleLunges,
+            possibleJumpingJacks,
+            maxRunTime}
+
+        await Users.findOneAndUpdate({_id: req.user.id}, {fitnessLevel});
+        res.json({msg: "Fitness level updated"});
     }
 
 } 

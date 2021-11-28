@@ -28,4 +28,6 @@ router.patch('/setUserWeight', auth, userCtrl.setUserWeight);
 
 router.post('/completedWorkout', auth, userCtrl.addCompletedWorkout);
 
+router.post('/updateFitness', auth, userCtrl.updateFitnessLevel);
+
 module.exports = router;

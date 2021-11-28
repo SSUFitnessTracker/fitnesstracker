@@ -19,7 +19,7 @@
     display: flex;
     justify-content: center;
     align-content: center;
-    margin-top: 8vh;
+    margin-top: 3vh;
 }
 
 .logo{
@@ -38,7 +38,63 @@
 }
 
 .profileContainer{
+    display:flex;
+    flex-direction: column;
+    gap:30px 20px;
+    justify-content:center;
+    margin-top: 50px;
+}
+
+.profileContainerU{
     height: 100vh;
     background: rgb(131,58,180);
 background: linear-gradient(51deg, rgba(131,58,180,1) 0%, rgba(255,116,116,1) 31%, rgba(252,208,69,1) 100%);
 }
+
+.outerContainer{
+    height: 100vh;
+    background: rgb(131,58,180);
+    background: linear-gradient(51deg, rgba(131,58,180,1) 0%, rgba(255,116,116,1) 31%, rgba(252,208,69,1) 100%);
+}
+
+.quote{
+    align-self: center;
+    font-family: 'Dancing Script', cursive;
+    font-weight: bold;
+}
+
+.dice{
+    align-self:center;
+}
+
+.startWorkoutContainer{
+    display: flex;
+    flex-flow: column wrap;
+    background: rgb(131,58,180);
+    background: linear-gradient(51deg, rgba(131,58,180,1) 0%, rgba(255,116,116,1) 31%, rgba(252,208,69,1) 100%);
+
+
+}
+
+.workoutSelection{
+    margin: 5px 5px 5px 5px;
+    align-self:center;
+}
+
+
+
+
+hr { 
+    color: black;
+    background-color: black;
+    width: 75vw; 
+}
+
+li{
+    font-size:18px;
+}
+
+.vl {
+    border-left: 6px solid green;
+    height: 500px;
+  }

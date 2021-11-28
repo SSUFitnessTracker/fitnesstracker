@@ -39,11 +39,14 @@ function TopBar(props) {
     history.push("/profile");
   };
 
+  const homeRedirect = () => {
+    history.push("/");
+  }
   return (
     <div>
       <AppBar position="static" style={{ background: "#212121" }}>
         <Toolbar>
-          <RunCircleIcon />
+          <RunCircleIcon style={{cursor: "pointer"}} onClick={homeRedirect}/>
           <Typography
             variant="h6"
             component="div"
