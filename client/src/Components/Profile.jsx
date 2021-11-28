@@ -22,7 +22,42 @@ function Profile() {
     const [newHeight, setNewHeight] = useState('');
     const [editWeight, showEditWeight] = useState(false);
     const [newWeight, setNewWeight] = useState('');
-  
+    const [editFitness, setEditFitness] = useState(false);
+
+    const [pushups, setpushups] = useState('');
+    const [situps, setsitups] = useState('');
+    const [squats, setsquats] = useState('');
+    const [pullups, setpullups] = useState('');
+    const [lunges, setlunges] = useState('');
+    const [jumpjacks, setjumpjacks] = useState('');
+    const [runtime, setruntime] = useState('');
+
+
+
+    let handleEditFitness = () =>{
+      setEditFitness(!editFitness);
+    }
+    let handlepushups = (e) => {
+      setpushups(e.target.value);
+    }
+    let handlesitups = (e) => {
+      setsitups(e.target.value);
+    }
+    let handlesquats = (e) => {
+      setsquats(e.target.value);
+    }
+    let handlepullups = (e) => {
+      setpullups(e.target.value);
+    }
+    let handlelunges = (e) => {
+      setlunges(e.target.value);
+    }
+    let handlejumpjacks = (e) => {
+      setjumpjacks(e.target.value);
+    }
+    let handleruntime = (e) => {
+      setruntime(e.target.value);
+    }
 
     const {user, isLogged} = auth;
 
@@ -75,6 +110,40 @@ function Profile() {
         window.location.reload(false);
       }
 
+      const setNewUserFitness = async () => {
+        if(pushups === '' ||
+           situps === '' ||
+           pullups === '' ||
+           lunges === '' ||
+           jumpjacks === '' ||
+           runtime === ''){
+             setEditFitness(false);
+             return;
+           }
+        const res = await axios.post(
+          "/user/updateFitness",
+          { possiblePushups: parseInt(pushups),
+            possibleSitups: parseInt(situps),
+            possibleSquats: parseInt(squats),
+            possiblePullups: parseInt(pullups),
+            possibleLunges: parseInt(lunges),
+            possibleJumpingJacks: parseInt(jumpjacks),
+            maxRunTime: parseInt(runtime)},
+          { headers: { Authorization: token } }
+        );
+        console.log(res);
+        user.fitnessLevel.possiblePushups = pushups;
+        user.fitnessLevel.possibleSitups = situps;
+        user.fitnessLevel.possibleSquats= squats;
+        user.fitnessLevel.possiblePullups = pullups;
+        user.fitnessLevel.possibleLunges = lunges;
+        user.fitnessLevel.possibleJumpingJacks = jumpjacks;
+        user.fitnessLevel.maxRunTime = runtime;
+        setEditFitness(false);
+        // window.location.reload(false);
+      }
+
+
       const setNewUserWeight = async () => {
         if(newWeight === "" ){
           showEditWeight(!editWeight);
@@ -100,7 +169,7 @@ function Profile() {
       }
       
     return (
-        <div className="profileContainer">
+        <div className="profileContainerU">
         <TopBar authenticated={true}  />
             
 
@@ -149,8 +218,48 @@ function Profile() {
                     </div> 
                     }
                     
-                    <h4>Current Program: {user.currentProgram}</h4>
-                    <h4>Completed Workouts: {user.completedWorkouts}</h4>
+                    
+                    <h4>Completed Workouts: {user.completedWorkouts.length}</h4>
+
+                    <h4>Fitness Level: <CreateIcon style={{cursor:"pointer"}} onClick={handleEditFitness} />
+                    {editFitness ? <>
+                    <div>
+                      <TextField type="number" style={{width: "120px"}} label="Pushups" variant="outlined" value={pushups} onChange={handlepushups} />
+                      <TextField type="number" style={{width: "120px"}} label="Situps" variant="outlined" value={situps} onChange={handlesitups} />
+
+                    </div>
+
+                    <div>
+                     <TextField type="number" style={{width: "120px"}} label="Squats" variant="outlined" value={squats} onChange={handlesquats} />
+                     <TextField type="number" style={{width: "120px"}} label="Pullups" variant="outlined" value={pullups} onChange={handlepullups} />
+
+                    </div>
+
+                    <div>
+                     <TextField type="number" style={{width: "120px"}} label="Lunges" variant="outlined" value={lunges} onChange={handlelunges} />
+                     <TextField type="number" style={{width: "120px"}} label="Jumping Jacks" variant="outlined" value={jumpjacks} onChange={handlejumpjacks} />
+
+                    </div>
+
+                    <div>
+                     <TextField type="number" style={{width: "120px", marginLeft: '60px'}} label="Run Time" variant="outlined" value={runtime} onChange={handleruntime} />
+                    </div>
+                    <div>
+                    <Button variant="contained" size='medium' style={{marginLeft:"35%", marginTop:"12%"}} onClick={setNewUserFitness}>Set</Button>
+
+                    </div>
+                    </> :  
+                      <ul>
+                      <li>Pushups: {user.fitnessLevel.possiblePushups}</li>
+                      <li>Situps: {user.fitnessLevel.possibleSitups}</li>
+                      <li>Squats: {user.fitnessLevel.possibleSquats}</li>
+                      <li>Pullups: {user.fitnessLevel.possiblePullups}</li>
+                      <li>Lunges: {user.fitnessLevel.possibleLunges}</li>
+                      <li>Jumping Jacks: {user.fitnessLevel.possibleJumpingJacks}</li>
+                      <li>Run Time: {user.fitnessLevel.maxRunTime} s </li>
+                    </ul>
+                    }
+                    </h4>
                     </Container>
 
                 </div>

@@ -9,6 +9,7 @@ import {dispatchLogin, fetchUser, dispatchFetchUser} from '../redux/actions/auth
 import Profile from './Profile';
 import UserLanding from './UserLanding';
 import SelectWorkout from './SelectWorkout';
+import DiceRoller from './DiceRoller';
 
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
           <Route path="/user/activate/:activationToken" component={Home}/>
           <Route path="/user/landing" component={UserLanding} />
           <Route path="/user/startWorkout" component={SelectWorkout} />
+          <Route path="/user/diceRoll" component={DiceRoller} />
           <Route path="/" component={Home} />
         </Switch>
       </Router>
