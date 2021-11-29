@@ -106,8 +106,9 @@ function Profile() {
           { headers: { Authorization: token } }
         );
         console.log(res);
+        user.height = parseInt(newHeight);
         showEditHeight(false);
-        window.location.reload(false);
+        
       }
 
       const setNewUserFitness = async () => {
@@ -155,8 +156,8 @@ function Profile() {
           { headers: { Authorization: token } }
         );
         console.log(res);
+        user.weight = parseInt(newWeight);
         showEditWeight(false);
-        window.location.reload(false);
       }
 
 
@@ -219,7 +220,7 @@ function Profile() {
                     }
                     
                     
-                    <h4>Completed Workouts: {user.completedWorkouts.length}</h4>
+                    <h4>Completed Workouts: {user.completedWorkouts}</h4>
 
                     <h4>Fitness Level: <CreateIcon style={{cursor:"pointer"}} onClick={handleEditFitness} />
                     {editFitness ? <>

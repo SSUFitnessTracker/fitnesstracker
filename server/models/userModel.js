@@ -47,17 +47,9 @@ const userSchema = new mongoose.Schema({
         possibleJumpingJacks: {type: Number, default: 0},
         maxRunTime: {type: Number, default: 0}
     },
-    completedWorkouts: [
-        {
-            pushups: {type: Number, default: 0},
-            situps: {type: Number, default: 0},
-            squats: {type: Number, default: 0},
-            pullups: {type: Number, default: 0},
-            lunges: {type: Number, default: 0},
-            jumpingJacks: {type: Number, default: 0},
-            runTime: {type: Number, default: 0}
-        }
-    ],
+    completedWorkouts: {
+        type: Number, default: 0
+    },
     currentProgram: {
         type: String,
         default: "NA"
