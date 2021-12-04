@@ -161,6 +161,21 @@ function Profile() {
       }
 
 
+      const changeAvatar = async(e) => {
+        e.preventDefault()
+            const file = e.target.files[0]
+
+            let formData =  new FormData()
+            formData.append('file', file)
+
+
+            const res = await axios.post('/api/uploadAvatar', formData, {
+                headers: {'content-type': 'multipart/form-data', Authorization: token}
+            })
+            user.avatar = res.data.url   
+    }
+
+
       const handleHeightEdit = () =>{
         showEditHeight(true);
       }
@@ -196,7 +211,7 @@ function Profile() {
                     </Container>
                     <Container>
 
-                    <p style={{ cursor: "pointer",fontSize:"15px", color: 'dodgerblue', fontWeight:"bold", marginLeft:"4px"}}>Change Profile Picture</p>
+
                     {editWeight 
                     ? 
                     <div>

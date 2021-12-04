@@ -16,8 +16,11 @@ function DiceRoller(props) {
     const history = useHistory();
     let workout = {};
 
-    let StartWorkout = () =>{
-        history.push('/user/currentWorkout');
+    let StartWorkout = (_diceValue) =>{
+        history.push({ pathname: '/user/currentWorkout',
+                        state: {diceNumber: _diceValue,
+                                workout: props.location.state.workout}
+                    });
     }
     const handleOnRoll = (value) => {
         setDiceValue(value);
@@ -98,7 +101,7 @@ function DiceRoller(props) {
                     </div>
 
                     <div style={{alignSelf: 'center'}}>
-                        <Button variant="contained" style={{background: '#5B70A3', color:'white', width: '10vw'}} onClick={StartWorkout}>Start Workout</Button>
+                        <Button variant="contained" style={{background: '#5B70A3', color:'white', width: '10vw'}} onClick={() => StartWorkout(diceValue)}>Start Workout</Button>
                     </div>
                 </>
                     :
