@@ -228,20 +228,11 @@ const userCtrl = {
 
     addCompletedWorkout: async (req, res) =>{
         try {
-            const {pushups, situps, squats, pullups, lunges, jumpingjacks, runTime} = req.body;
-    
-            const completedWorkout = {
-                pushups, situps, squats, pullups, lunges, jumpingjacks, runTime
-            };
 
-            console.log(completedWorkout);
-
-            const user = await Users.findById({_id: req.user.id});
-
-            user.completedWorkouts.push(completedWorkout);
+            let user = await Users.findById(req.user.id);
+            user.completedWorkouts++;
             user.save();
             res.json({msg: "Updated user completed workouts!"});
-
         } catch (error) {
             return res.status(500).json({msg: error.message});
         }

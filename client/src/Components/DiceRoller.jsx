@@ -13,9 +13,15 @@ function DiceRoller(props) {
     const {user, isLogged} = auth;
     const [diceDisabled, setDiceDisabled] = useState(false);
     const [diceValue, setDiceValue] = useState('');
-
+    const history = useHistory();
     let workout = {};
 
+    let StartWorkout = (_diceValue) =>{
+        history.push({ pathname: '/user/currentWorkout',
+                        state: {diceNumber: _diceValue,
+                                workout: props.location.state.workout}
+                    });
+    }
     const handleOnRoll = (value) => {
         setDiceValue(value);
         setDiceDisabled(true);
@@ -95,7 +101,7 @@ function DiceRoller(props) {
                     </div>
 
                     <div style={{alignSelf: 'center'}}>
-                        <Button variant="contained" style={{background: '#5B70A3', color:'white', width: '10vw'}}>Start Workout</Button>
+                        <Button variant="contained" style={{background: '#5B70A3', color:'white', width: '10vw'}} onClick={() => StartWorkout(diceValue)}>Start Workout</Button>
                     </div>
                 </>
                     :

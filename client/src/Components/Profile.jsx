@@ -106,8 +106,9 @@ function Profile() {
           { headers: { Authorization: token } }
         );
         console.log(res);
+        user.height = parseInt(newHeight);
         showEditHeight(false);
-        window.location.reload(false);
+        
       }
 
       const setNewUserFitness = async () => {
@@ -155,9 +156,24 @@ function Profile() {
           { headers: { Authorization: token } }
         );
         console.log(res);
+        user.weight = parseInt(newWeight);
         showEditWeight(false);
-        window.location.reload(false);
       }
+
+
+      const changeAvatar = async(e) => {
+        e.preventDefault()
+            const file = e.target.files[0]
+
+            let formData =  new FormData()
+            formData.append('file', file)
+
+
+            const res = await axios.post('/api/uploadAvatar', formData, {
+                headers: {'content-type': 'multipart/form-data', Authorization: token}
+            })
+            user.avatar = res.data.url   
+    }
 
 
       const handleHeightEdit = () =>{
@@ -195,7 +211,7 @@ function Profile() {
                     </Container>
                     <Container>
 
-                    <p style={{ cursor: "pointer",fontSize:"15px", color: 'dodgerblue', fontWeight:"bold", marginLeft:"4px"}}>Change Profile Picture</p>
+
                     {editWeight 
                     ? 
                     <div>
@@ -219,7 +235,7 @@ function Profile() {
                     }
                     
                     
-                    <h4>Completed Workouts: {user.completedWorkouts.length}</h4>
+                    <h4>Completed Workouts: {user.completedWorkouts}</h4>
 
                     <h4>Fitness Level: <CreateIcon style={{cursor:"pointer"}} onClick={handleEditFitness} />
                     {editFitness ? <>

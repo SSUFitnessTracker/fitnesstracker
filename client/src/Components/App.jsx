@@ -10,7 +10,7 @@ import Profile from './Profile';
 import UserLanding from './UserLanding';
 import SelectWorkout from './SelectWorkout';
 import DiceRoller from './DiceRoller';
-
+import CurrentWorkout from './CurrentWorkout';
 
 function App() {
   const dispatch = useDispatch();
@@ -52,6 +52,7 @@ function App() {
           <Route path="/user/landing" component={UserLanding} />
           <Route path="/user/startWorkout" component={SelectWorkout} />
           <Route path="/user/diceRoll" component={DiceRoller} />
+          <Route path="/user/currentWorkout" component={CurrentWorkout} />
           <Route path="/" component={Home} />
         </Switch>
       </Router>
